@@ -19,7 +19,6 @@ def index():
     '''
 
 
-
 @app.route('/list')
 def list_files():
     """マウントされたGCSバケット内のファイル一覧を表示"""
