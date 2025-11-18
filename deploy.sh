@@ -6,10 +6,16 @@ REGION="asia-northeast1"
 SERVICE_NAME="gcs-mount-test"
 BUCKET_NAME="your-bucket-name"
 MOUNT_PATH="/gcs"
+IMAGE_NAME="gcr.io/${PROJECT_ID}/${SERVICE_NAME}"
+
+# Docker イメージをビルド
+echo "Building Docker image..."
+gcloud builds submit --tag ${IMAGE_NAME}
 
 # Cloud Runにデプロイ（GCSマウント付き）
+echo "Deploying to Cloud Run..."
 gcloud run deploy $SERVICE_NAME \
-  --source . \
+  --image ${IMAGE_NAME} \
   --platform managed \
   --region $REGION \
   --allow-unauthenticated \
